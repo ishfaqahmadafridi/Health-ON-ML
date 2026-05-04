@@ -4,7 +4,7 @@
  */
 
 import { useState, useCallback } from 'react';
-import { PatientInput, PredictionResponse, PredictionState } from '../types';
+import type { PatientInput, PredictionState } from '../types';
 import { predictHealthRisks, savePrediction } from '../api/health';
 
 const initialState: PredictionState = {

@@ -3,7 +3,7 @@
  * Convert model scores to risk levels and calculate additional health metrics
  */
 
-import { DiseaseRisk, BMIResult, BloodPressureClassification } from '../types';
+import type { DiseaseRisk, BMIResult, BloodPressureClassification } from '../types';
 
 /**
  * Convert risk score (0-100) to risk level

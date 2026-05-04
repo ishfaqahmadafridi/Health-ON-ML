@@ -3,8 +3,8 @@
  * Collects patient health data for prediction
  */
 
-import React, { useState } from 'react';
-import { PatientInput, ValidationError } from '../types';
+import { useState } from 'react';
+import type { PatientInput, ValidationError } from '../types';
 import { validatePatientInput, getFieldError } from '../utils/validation';
 
 export interface PatientFormProps {

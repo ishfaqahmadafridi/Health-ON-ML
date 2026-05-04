@@ -2,7 +2,7 @@
  * Form Validation Utilities
  */
 
-import { PatientInput, ValidationError } from '../types';
+import type { PatientInput, ValidationError } from '../types';
 
 /**
  * Validate patient input form data

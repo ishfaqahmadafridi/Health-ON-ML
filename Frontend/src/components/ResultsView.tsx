@@ -3,8 +3,7 @@
  * Displays the complete risk prediction results
  */
 
-import React from 'react';
-import { PredictionResponse } from '../types';
+import type { PredictionResponse } from '../types';
 import { RiskCard } from './RiskCard';
 
 export interface ResultsViewProps {

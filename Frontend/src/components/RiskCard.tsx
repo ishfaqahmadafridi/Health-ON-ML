@@ -3,8 +3,8 @@
  * Displays a single disease risk with score, level, and guidance
  */
 
-import React from 'react';
-import { DiseaseRisk } from '../types';
+import { type FC } from 'react';
+import type { DiseaseRisk } from '../types';
 import { getRiskColor, getRiskDescription, getDiseaseGuidance } from '../utils/riskCalculator';
 
 export interface RiskCardProps {
@@ -14,7 +14,7 @@ export interface RiskCardProps {
   risk: DiseaseRisk;
 }
 
-export const RiskCard: React.FC<RiskCardProps> = ({ disease, title, icon, risk }) => {
+export const RiskCard: FC<RiskCardProps> = ({ disease, title, icon, risk }) => {
   const color = getRiskColor(risk.level);
   const description = getRiskDescription(risk.level);
   const guidance = getDiseaseGuidance(disease, risk.level);
