@@ -1,11 +1,19 @@
-/* ========================================
-   GLOBAL STYLES & DESIGN SYSTEM
-   ======================================== */
+/* App.css - Tailwind + Custom Styles */
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* Custom styles for complex components not easily done with Tailwind */
+
+/* SVG Gauge Animation */
+@keyframes fillGauge {
+  from {
+    stroke-dashoffset: var(--circumference);
+  }
+  to {
+    stroke-dashoffset: var(--offset);
+  }
+}
+
+circle[class*="gauge"] {
+  transition: stroke-dashoffset 0.5s ease;
 }
 
 :root {

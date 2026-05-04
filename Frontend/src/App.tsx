@@ -51,20 +51,20 @@ function App() {
   };
 
   return (
-    <div className="app-wrapper">
+    <div className="flex min-h-screen bg-gray-50">
       <Sidebar activeView={view} onViewChange={handleViewChange} />
 
       {checkingBackend && (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <div className="flex-1 flex items-center justify-center bg-gray-100">
           <div className="text-center">
-            <div className="spinner"></div>
-            <p className="text-gray-700 mt-4">Initializing Health-ON-ML...</p>
+            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mb-4"></div>
+            <p className="text-gray-700">Initializing Health-ON-ML...</p>
           </div>
         </div>
       )}
 
       {!checkingBackend && !backendAvailable && (
-        <div className="flex items-center justify-center min-h-screen bg-red-50 flex-1">
+        <div className="flex-1 flex items-center justify-center bg-red-50">
           <div className="bg-white rounded-lg shadow-lg p-8 max-w-md text-center">
             <h1 className="text-2xl font-bold text-red-600 mb-4">Connection Error</h1>
             <p className="text-gray-700 mb-4">
@@ -85,17 +85,19 @@ function App() {
       )}
 
       {!checkingBackend && backendAvailable && (
-        <div className="app-content">
+        <div className="flex-1 flex flex-col">
           {error && (
-            <div className="error-banner">
-              <h3>Error</h3>
-              <p>{error}</p>
+            <div className="bg-red-50 border border-red-200 rounded-lg p-4 m-6">
+              <h3 className="font-semibold text-red-800 mb-2">Error</h3>
+              <p className="text-red-700">{error}</p>
             </div>
           )}
 
           {view === 'form' && (
-            <div className="form-container">
-              <PatientForm onSubmit={handleFormSubmit} isLoading={loading} />
+            <div className="flex-1 flex items-center justify-center p-6">
+              <div className="w-full max-w-2xl">
+                <PatientForm onSubmit={handleFormSubmit} isLoading={loading} />
+              </div>
             </div>
           )}
 
@@ -109,16 +111,16 @@ function App() {
           )}
 
           {view === 'history' && (
-            <div className="content-panel">
-              <h1>Assessment History</h1>
-              <p>Coming soon...</p>
+            <div className="flex-1 p-6 bg-white rounded-lg shadow-sm m-6">
+              <h1 className="text-3xl font-bold mb-6 text-gray-900">Assessment History</h1>
+              <p className="text-gray-500">Coming soon...</p>
             </div>
           )}
 
           {view === 'settings' && (
-            <div className="content-panel">
-              <h1>Settings</h1>
-              <p>Coming soon...</p>
+            <div className="flex-1 p-6 bg-white rounded-lg shadow-sm m-6">
+              <h1 className="text-3xl font-bold mb-6 text-gray-900">Settings</h1>
+              <p className="text-gray-500">Coming soon...</p>
             </div>
           )}
         </div>
