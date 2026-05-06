@@ -33,18 +33,18 @@ export const KeyFactorsChart: FC<KeyFactorsChartProps> = ({ disease, factors }) 
   const maxValue = Math.max(...factors.map((f) => f.value), 100);
 
   return (
-    <div className="factors-chart">
-      <h4>{getDiseaseName()} - Key Contributing Factors</h4>
-      <div className="factors-list">
+    <div className="mb-6">
+      <h4 className="text-sm font-semibold text-gray-900 mb-4">{getDiseaseName()} - Key Contributing Factors</h4>
+      <div className="space-y-3">
         {factors.map((factor, idx) => (
-          <div key={idx} className="factor-item">
-            <div className="factor-header">
-              <span className="factor-name">{factor.name}</span>
-              <span className="factor-value">{factor.value}</span>
+          <div key={idx} className="space-y-1">
+            <div className="flex justify-between items-center text-sm">
+              <span className="font-medium text-gray-700">{factor.name}</span>
+              <span className="font-semibold text-gray-900">{factor.value}</span>
             </div>
-            <div className="factor-bar">
+            <div className="w-full h-2 bg-gray-200 rounded overflow-hidden">
               <div
-                className="factor-fill"
+                className="h-full rounded transition-all duration-300"
                 style={{
                   width: `${(factor.value / maxValue) * 100}%`,
                   backgroundColor: getChartColor(),
