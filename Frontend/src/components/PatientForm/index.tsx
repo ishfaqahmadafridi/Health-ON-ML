@@ -1,5 +1,6 @@
 import type { FC } from 'react';
-import { PatientFormProvider, usePatientForm } from '../../context/form/PatientFormContext';
+import { PatientFormProvider } from '../../context/form/PatientFormContext';
+import { usePatientForm } from '../../hooks/form/usePatientForm';
 import { FormLayout } from './FormLayout';
 import { PersonalInfoSection } from './PersonalInfoSection';
 import { MedicalMeasurementsSection } from './MedicalMeasurementsSection';

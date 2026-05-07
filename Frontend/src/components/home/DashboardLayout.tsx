@@ -1,5 +1,5 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { Sidebar } from '../Sidebar';
+import { Sidebar } from '../Sidebar/index';
 import { Header } from '../Header/index';
 import { useAppSelector } from '../../store';
 

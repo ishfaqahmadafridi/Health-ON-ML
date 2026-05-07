@@ -14,22 +14,22 @@ export const DiseaseGaugesSection: FC = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
       <DiseaseGauge
-        label="Heart Disease"
-        score={results.heartDisease.riskScore}
-        level={results.heartDisease.level}
-        color="rose"
+        disease="Heart Disease"
+        riskScore={results.heartDisease.riskScore}
+        riskLevel={results.heartDisease.level}
+        description="Probability based on BP, Cholesterol, and Lifestyle factors."
       />
       <DiseaseGauge
-        label="Type 2 Diabetes"
-        score={results.diabetes.riskScore}
-        level={results.diabetes.level}
-        color="amber"
+        disease="Type 2 Diabetes"
+        riskScore={results.diabetes.riskScore}
+        riskLevel={results.diabetes.level}
+        description="Risk based on Glucose, BMI, and Age demographics."
       />
       <DiseaseGauge
-        label="Kidney Disease"
-        score={results.kidneyDisease.riskScore}
-        level={results.kidneyDisease.level}
-        color="emerald"
+        disease="Kidney Disease"
+        riskScore={results.kidneyDisease.riskScore}
+        riskLevel={results.kidneyDisease.level}
+        description="Assessment of renal stress and hydration markers."
       />
     </div>
   );

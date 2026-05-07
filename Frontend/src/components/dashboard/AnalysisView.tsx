@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { PatientProfile } from '../PatientProfile';
+import { PatientProfile } from '../PatientProfile/index';
 import { DiseaseGaugesSection } from './DiseaseGaugesSection';
 import { ExplanationSection } from './ExplanationSection';
 import { DashboardLayout } from './DashboardLayout';
