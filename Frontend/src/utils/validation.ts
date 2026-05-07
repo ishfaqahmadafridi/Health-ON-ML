@@ -1,126 +1,61 @@
 /**
- * Form Validation Utilities
+ * Clinical Data Validation Utilities
  */
-
 import type { PatientInput, ValidationError } from '../types';
 
 /**
- * Validate patient input form data
+ * Validates the PatientInput data based on clinical thresholds and categorical requirements.
  */
 export function validatePatientInput(data: Partial<PatientInput>): ValidationError[] {
   const errors: ValidationError[] = [];
 
-  // Age validation
-  if (!data.age || data.age < 0 || data.age > 150) {
-    errors.push({ field: 'age', message: 'Please enter a valid age (0-150)' });
-  }
-
-  // Gender validation
-  if (!data.gender || !['male', 'female', 'other'].includes(data.gender)) {
-    errors.push({ field: 'gender', message: 'Please select a gender' });
+  // Age validation (Clinical range)
+  if (data.age === undefined || data.age < 0 || data.age > 120) {
+    errors.push({ field: 'age', message: 'Enter a valid age (0-120)' });
   }
 
   // Weight validation
-  if (!data.weight || data.weight < 20 || data.weight > 500) {
-    errors.push({
-      field: 'weight',
-      message: 'Please enter a valid weight (20-500 kg)',
-    });
+  if (!data.weight || data.weight < 20 || data.weight > 400) {
+    errors.push({ field: 'weight', message: 'Enter a valid weight (20-400 kg)' });
   }
 
   // Height validation
   if (!data.height || data.height < 50 || data.height > 250) {
-    errors.push({
-      field: 'height',
-      message: 'Please enter a valid height (50-250 cm)',
-    });
+    errors.push({ field: 'height', message: 'Enter a valid height (50-250 cm)' });
   }
 
-  // Blood pressure
-  if (
-    !data.bloodPressureSystolic ||
-    data.bloodPressureSystolic < 50 ||
-    data.bloodPressureSystolic > 250
-  ) {
-    errors.push({
-      field: 'bloodPressureSystolic',
-      message: 'Please enter valid systolic BP (50-250 mmHg)',
-    });
+  // Blood Pressure validation
+  if (!data.systolicBP || data.systolicBP < 50 || data.systolicBP > 250) {
+    errors.push({ field: 'systolicBP', message: 'Enter systolic BP (50-250)' });
+  }
+  if (!data.diastolicBP || data.diastolicBP < 30 || data.diastolicBP > 150) {
+    errors.push({ field: 'diastolicBP', message: 'Enter diastolic BP (30-150)' });
   }
 
-  if (
-    !data.bloodPressureDiastolic ||
-    data.bloodPressureDiastolic < 30 ||
-    data.bloodPressureDiastolic > 150
-  ) {
-    errors.push({
-      field: 'bloodPressureDiastolic',
-      message: 'Please enter valid diastolic BP (30-150 mmHg)',
-    });
-  }
+  // Categorical validations (Glucose, Cholesterol, etc.)
+  const categoricalFields: (keyof PatientInput)[] = [
+    'gender', 'cholesterol', 'glucose', 'smoker', 'alcohol', 'active'
+  ];
 
-  // Glucose validation
-  if (!data.glucoseLevel || data.glucoseLevel < 50 || data.glucoseLevel > 600) {
-    errors.push({
-      field: 'glucoseLevel',
-      message: 'Please enter valid glucose level (50-600 mg/dL)',
-    });
-  }
-
-  // Cholesterol validation
-  if (!data.cholesterol || data.cholesterol < 100 || data.cholesterol > 400) {
-    errors.push({
-      field: 'cholesterol',
-      message: 'Please enter valid cholesterol (100-400 mg/dL)',
-    });
-  }
-
-  // Heart rate validation
-  if (!data.heartRate || data.heartRate < 30 || data.heartRate > 200) {
-    errors.push({
-      field: 'heartRate',
-      message: 'Please enter valid heart rate (30-200 bpm)',
-    });
-  }
-
-  // Smoking status
-  if (
-    !data.smokingStatus ||
-    !['never', 'former', 'current'].includes(data.smokingStatus)
-  ) {
-    errors.push({
-      field: 'smokingStatus',
-      message: 'Please select a smoking status',
-    });
-  }
-
-  // Physical activity
-  if (
-    !data.physicalActivityLevel ||
-    !['sedentary', 'light', 'moderate', 'vigorous'].includes(data.physicalActivityLevel)
-  ) {
-    errors.push({
-      field: 'physicalActivityLevel',
-      message: 'Please select an activity level',
-    });
-  }
+  categoricalFields.forEach(field => {
+    if (!data[field]) {
+      errors.push({ field, message: `Please select ${field}` });
+    }
+  });
 
   return errors;
 }
 
 /**
- * Check if a field has an error
+ * Retrieves the error message for a specific field if it exists.
  */
-export function getFieldError(
-  errors: ValidationError[],
-  field: string
-): string | null {
+export function getFieldError(errors: ValidationError[], field: string): string | null {
   const error = errors.find((e) => e.field === field);
   return error ? error.message : null;
 }
 
 /**
- * Check if form is valid
+ * Helper to determine if the clinical form is ready for submission.
  */
 export function isFormValid(errors: ValidationError[]): boolean {
   return errors.length === 0;

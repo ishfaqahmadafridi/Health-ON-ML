@@ -1,10 +1,10 @@
 import { Routes, Route } from 'react-router-dom';
 import { DashboardLayout } from './components/home/DashboardLayout';
 import { DashboardView } from './components/home/DashboardView';
-import { PatientProfileView } from './components/home/PatientProfileView';
+import { PatientProfile as PatientProfileView } from './components/PatientProfile/index';
 import { DoctorProfile as DoctorProfileView } from './components/DoctorProfile/index';
 import { HistoryView } from './components/History/index';
-import { SettingsView } from './components/home/SettingsView';
+import { Settings as SettingsView } from './components/Settings/index';
 import { useAppInit } from './hooks/app/useAppInit';
 
 const App = () => {

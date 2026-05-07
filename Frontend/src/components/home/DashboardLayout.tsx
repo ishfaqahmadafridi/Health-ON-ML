@@ -1,6 +1,6 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Sidebar } from '../Sidebar';
-import { Header } from '../Header';
+import { Header } from '../Header/index';
 import { useAppSelector } from '../../store';
 
 export const DashboardLayout = () => {
