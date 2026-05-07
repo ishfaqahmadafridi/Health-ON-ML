@@ -1,12 +1,10 @@
 import type { FC } from 'react';
 import { User } from 'lucide-react';
+import { useDoctorProfile } from '../../hooks/doctor/useDoctorProfile';
 
-interface ProfileHeaderProps {
-  onAddClick: () => void;
-  showAddButton: boolean;
-}
+export const ProfileHeader: FC = () => {
+  const { handleNew, isEditing } = useDoctorProfile();
 
-export const ProfileHeader: FC<ProfileHeaderProps> = ({ onAddClick, showAddButton }) => {
   return (
     <div className="flex items-center justify-between mb-8">
       <div className="flex items-center gap-4">
@@ -19,9 +17,9 @@ export const ProfileHeader: FC<ProfileHeaderProps> = ({ onAddClick, showAddButto
         </div>
       </div>
       
-      {showAddButton && (
+      {!isEditing && (
         <button 
-          onClick={onAddClick}
+          onClick={handleNew}
           className="bg-blue-50 text-blue-600 hover:bg-blue-100 font-black text-[10px] uppercase tracking-widest px-5 py-3 rounded-xl transition-all active:scale-95"
         >
           + Add New Practitioner

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Dashboard } from '../dashboard';
 import { useAppDispatch } from '../../store';
-import { usePrediction } from '../../hooks/usePrediction';
+import { usePrediction } from '../../hooks/prediction/usePrediction';
 import { setError } from '../../store/slices';
 import type { PatientInput } from '../../types';
 

@@ -1,8 +1,6 @@
-import { useState } from 'react';
 import type { FC } from 'react';
-import { useAppDispatch, useAppSelector } from '../../store';
-import { addDoctor, updateDoctor, setCurrentDoctor, deleteDoctor } from '../../store/slices';
-import type { Doctor } from '../../types';
+import { DoctorProfileProvider } from '../../context/doctor/DoctorProfileContext';
+import { useDoctorProfile } from '../../hooks/doctor/useDoctorProfile';
 
 // Sub-components
 import { ProfileHeader } from './ProfileHeader';
@@ -12,72 +10,31 @@ import { ProfileStats } from './ProfileStats';
 import { ProfileBio } from './ProfileBio';
 import { DeleteDoctorButton } from './DeleteDoctorButton';
 
-export const DoctorProfile: FC = () => {
-  const dispatch = useAppDispatch();
-  const { doctors, currentDoctorId } = useAppSelector(state => state.doctor);
-  const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState<Doctor>({
-    id: '', name: '', email: '', role: '', specialty: '', image: null
-  });
-
-  const activeDoctor = doctors.find(d => d.id === currentDoctorId) || doctors[0];
-
-  const handleEdit = (doctor: Doctor) => {
-    setFormData(doctor);
-    setIsEditing(true);
-  };
-
-  const handleNew = () => {
-    setFormData({
-      id: `doc-${Date.now()}`, 
-      name: '', 
-      email: '', 
-      role: 'Physician', 
-      specialty: 'General Medicine', 
-      image: null
-    });
-    setIsEditing(true);
-  };
-
-  const handleSave = () => {
-    if (!formData.name) return alert('Practitioner name is mandatory');
-    const existing = doctors.find(d => d.id === formData.id);
-    
-    if (existing) {
-      dispatch(updateDoctor(formData));
-    } else {
-      dispatch(addDoctor(formData));
-    }
-    setIsEditing(false);
-  };
+/**
+ * Internal view component that consumes the Doctor Profile Context
+ */
+const DoctorProfileContent: FC = () => {
+  const {
+    doctors,
+    activeDoctor,
+    isEditing,
+    handleDelete
+  } = useDoctorProfile();
 
   return (
     <div className="max-w-5xl mx-auto w-full p-6 animate-in fade-in duration-500">
-      <ProfileHeader 
-        onAddClick={handleNew} 
-        showAddButton={!isEditing} 
-      />
+      <ProfileHeader />
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
         {/* Left Column: Form or Stats */}
         <div className="lg:col-span-7">
           {isEditing ? (
-            <ProfileForm 
-              formData={formData}
-              setFormData={setFormData}
-              onSave={handleSave}
-              onCancel={() => setIsEditing(false)}
-            />
+            <ProfileForm />
           ) : (
             <div className="bg-white rounded-[32px] p-8 shadow-2xl shadow-blue-500/5 border border-gray-100">
               <ProfileStats />
               <ProfileBio />
-              <DoctorList 
-                doctors={doctors}
-                currentDoctorId={currentDoctorId}
-                onEdit={handleEdit}
-                onSwitch={(id) => dispatch(setCurrentDoctor(id))}
-              />
+              <DoctorList />
             </div>
           )}
         </div>
@@ -109,11 +66,22 @@ export const DoctorProfile: FC = () => {
             </div>
 
             {!isEditing && doctors.length > 1 && (
-              <DeleteDoctorButton onDelete={() => dispatch(deleteDoctor(activeDoctor.id))} />
+              <DeleteDoctorButton onDelete={() => handleDelete(activeDoctor.id)} />
             )}
           </div>
         </div>
       </div>
     </div>
+  );
+};
+
+/**
+ * Main DoctorProfile entry point wrapped in the DoctorProfileProvider
+ */
+export const DoctorProfile: FC = () => {
+  return (
+    <DoctorProfileProvider>
+      <DoctorProfileContent />
+    </DoctorProfileProvider>
   );
 };

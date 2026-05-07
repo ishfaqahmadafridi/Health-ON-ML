@@ -3,9 +3,9 @@ import { DashboardLayout } from './components/home/DashboardLayout';
 import { DashboardView } from './components/home/DashboardView';
 import { PatientProfileView } from './components/home/PatientProfileView';
 import { DoctorProfile as DoctorProfileView } from './components/DoctorProfile/index';
-import { HistoryView } from './components/home/HistoryView';
+import { HistoryView } from './components/History/index';
 import { SettingsView } from './components/home/SettingsView';
-import { useAppInit } from './hooks/useAppInit';
+import { useAppInit } from './hooks/app/useAppInit';
 
 const App = () => {
   // Handle global initialization and theme

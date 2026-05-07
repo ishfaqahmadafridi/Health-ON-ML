@@ -3,21 +3,10 @@ import { AvatarUpload } from './AvatarUpload';
 import { EditableField } from './EditableField';
 import { SpecialtySelector } from './SpecialtySelector';
 import { ActionButtons } from './ActionButtons';
-import type { Doctor } from '../../types';
+import { useDoctorProfile } from '../../hooks/doctor/useDoctorProfile';
 
-interface ProfileFormProps {
-  formData: Doctor;
-  setFormData: (data: Doctor) => void;
-  onSave: () => void;
-  onCancel: () => void;
-}
-
-export const ProfileForm: FC<ProfileFormProps> = ({ 
-  formData, 
-  setFormData, 
-  onSave, 
-  onCancel 
-}) => {
+export const ProfileForm: FC = () => {
+  const { formData, setFormData, handleSave, handleCancel } = useDoctorProfile();
   const isNew = formData.id.startsWith('doc-');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,8 +52,8 @@ export const ProfileForm: FC<ProfileFormProps> = ({
       />
 
       <ActionButtons 
-        onSave={onSave} 
-        onCancel={onCancel} 
+        onSave={handleSave} 
+        onCancel={handleCancel} 
         isNew={isNew} 
       />
     </div>
