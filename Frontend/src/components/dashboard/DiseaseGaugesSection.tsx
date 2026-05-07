@@ -1,36 +1,35 @@
 import type { FC } from 'react';
-import { DiseaseGauge } from '../DiseaseGauge';
-import type { PredictionResponse } from '../../types';
+import { DiseaseGauge } from './DiseaseGauge';
+import { useDashboard } from '../../hooks/dashboard/useDashboard';
 
-interface DiseaseGaugesSectionProps {
-  results: PredictionResponse | null;
-}
+/**
+ * Section rendering the three primary disease risk gauges.
+ * Now consumes results directly from DashboardContext.
+ */
+export const DiseaseGaugesSection: FC = () => {
+  const { results } = useDashboard();
 
-export const DiseaseGaugesSection: FC<DiseaseGaugesSectionProps> = ({ results }) => {
   if (!results) return null;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
       <DiseaseGauge
-        disease="heart"
-        title="HEART DISEASE RISK"
-        riskScore={results.heartDisease.riskScore}
-        riskLevel={results.heartDisease.level}
-        description="Mainly driven by Blood Pressure, Cholesterol, and Age."
+        label="Heart Disease"
+        score={results.heartDisease.riskScore}
+        level={results.heartDisease.level}
+        color="rose"
       />
       <DiseaseGauge
-        disease="diabetes"
-        title="DIABETES RISK"
-        riskScore={results.diabetes.riskScore}
-        riskLevel={results.diabetes.level}
-        description="Driven by Glucose levels, BMI, and Activity Level."
+        label="Type 2 Diabetes"
+        score={results.diabetes.riskScore}
+        level={results.diabetes.level}
+        color="amber"
       />
       <DiseaseGauge
-        disease="kidney"
-        title="KIDNEY DISEASE RISK"
-        riskScore={results.kidneyDisease.riskScore}
-        riskLevel={results.kidneyDisease.level}
-        description="Mainly influenced by Blood Pressure and Age."
+        label="Kidney Disease"
+        score={results.kidneyDisease.riskScore}
+        level={results.kidneyDisease.level}
+        color="emerald"
       />
     </div>
   );

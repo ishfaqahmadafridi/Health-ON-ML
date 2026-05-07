@@ -1,33 +1,32 @@
 import type { FC } from 'react';
 import { PatientProfile } from '../PatientProfile';
-import { DashboardHeader } from './DashboardHeader';
 import { DiseaseGaugesSection } from './DiseaseGaugesSection';
 import { ExplanationSection } from './ExplanationSection';
-import { KeyFactorsSection } from './KeyFactorsSection';
-import { DashboardActions } from './DashboardActions';
 import { DashboardLayout } from './DashboardLayout';
-import type { PatientInput, PredictionResponse } from '../../types';
+import { useDashboard } from '../../hooks/dashboard/useDashboard';
 
-interface AnalysisViewProps {
-  patientData: PatientInput;
-  results: PredictionResponse | null;
-  onNewAssessment: () => void;
-}
+/**
+ * AnalysisView Component
+ * Displays the clinical diagnostic results.
+ * Now consumes data directly from DashboardContext.
+ */
+export const AnalysisView: FC = () => {
+  const { patientData } = useDashboard();
+  
+  if (!patientData) return null;
 
-export const AnalysisView: FC<AnalysisViewProps> = ({
-  patientData,
-  results,
-  onNewAssessment,
-}) => {
   const leftPanel = <PatientProfile data={patientData} />;
 
   const rightPanel = (
-    <div className="max-w-4xl mx-auto">
-      <DashboardHeader onNewAssessment={onNewAssessment} />
-      <DiseaseGaugesSection results={results} />
+    <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-5">
+        <h2 className="text-lg font-black text-gray-800 uppercase tracking-tight">
+          Multivariate Disease Risk Analysis
+        </h2>
+        <DiseaseGaugesSection />
+      </div>
+      
       <ExplanationSection />
-      <KeyFactorsSection />
-      <DashboardActions onNewAssessment={onNewAssessment} />
     </div>
   );
 

@@ -8,6 +8,15 @@ interface UIState {
   modalType: 'pdf' | 'save' | 'history' | null;
   backendAvailable: boolean;
   initializing: boolean;
+  searchQuery: string;
+  preferences: {
+    emailAlerts: boolean;
+    weeklySummaries: boolean;
+    systemUpdates: boolean;
+    darkMode: boolean;
+    compactView: boolean;
+    autoSave: boolean;
+  };
 }
 
 const initialState: UIState = {
@@ -18,7 +27,26 @@ const initialState: UIState = {
   modalType: null,
   backendAvailable: true,
   initializing: true,
+  searchQuery: '',
+  preferences: {
+    emailAlerts: true,
+    weeklySummaries: true,
+    systemUpdates: false,
+    darkMode: false,
+    compactView: false,
+    autoSave: true,
+  },
 };
+
+// Check localStorage for saved preferences
+try {
+  const savedPrefs = localStorage.getItem('health_on_ml_preferences');
+  if (savedPrefs) {
+    initialState.preferences = JSON.parse(savedPrefs);
+  }
+} catch (e) {
+  console.error('Failed to parse preferences from localStorage');
+}
 
 export const uiSlice = createSlice({
   name: 'ui',
@@ -53,6 +81,18 @@ export const uiSlice = createSlice({
     finishInitializing: (state) => {
       state.initializing = false;
     },
+    togglePreference: (state, action) => {
+      const key = action.payload as keyof typeof state.preferences;
+      state.preferences[key] = !state.preferences[key];
+      try {
+        localStorage.setItem('health_on_ml_preferences', JSON.stringify(state.preferences));
+      } catch (e) {
+        console.error('Failed to save preferences to localStorage');
+      }
+    },
+    setSearchQuery: (state, action) => {
+      state.searchQuery = action.payload;
+    },
   },
 });
 
@@ -66,6 +106,8 @@ export const {
   setBackendAvailable,
   setInitializing,
   finishInitializing,
+  togglePreference,
+  setSearchQuery,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;

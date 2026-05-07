@@ -1,17 +1,19 @@
 import type { FC } from 'react';
-import { PatientForm } from '../PatientForm';
-import type { PatientInput } from '../../types';
+import { PatientForm } from '../PatientForm/index';
+import { useDashboard } from '../../hooks/dashboard/useDashboard';
 
-interface FormViewProps {
-  onSubmit: (data: PatientInput) => void;
-  isLoading: boolean;
-}
+/**
+ * FormView Component
+ * Renders the clinical data entry form.
+ * Now consumes submission logic and loading states from DashboardContext.
+ */
+export const FormView: FC = () => {
+  const { onFormSubmit, isLoading } = useDashboard();
 
-export const FormView: FC<FormViewProps> = ({ onSubmit, isLoading }) => {
   return (
     <div className="flex-1 flex items-center justify-center p-6">
       <div className="w-full max-w-2xl">
-        <PatientForm onSubmit={onSubmit} isLoading={isLoading} />
+        <PatientForm onSubmit={onFormSubmit} isLoading={isLoading} />
       </div>
     </div>
   );

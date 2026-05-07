@@ -7,16 +7,14 @@ interface DashboardLayoutProps {
 
 export const DashboardLayout: FC<DashboardLayoutProps> = ({ leftPanel, rightPanel }) => {
   return (
-    <div className="flex-1 flex gap-6 overflow-hidden">
+    <div className="flex gap-8 items-start w-full max-w-[1600px] mx-auto">
       {/* Left Panel - Patient Profile */}
-      <div className="w-80 overflow-y-auto sticky top-0 h-screen">
-        <div className="p-6">
-          {leftPanel}
-        </div>
+      <div className="w-80 shrink-0">
+        {leftPanel}
       </div>
 
       {/* Right Panel - Analysis Results */}
-      <div className="flex-1 overflow-y-auto p-6">
+      <div className="flex-1 min-w-0">
         {rightPanel}
       </div>
     </div>
