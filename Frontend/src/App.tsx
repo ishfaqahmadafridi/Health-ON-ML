@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import { DashboardLayout } from './components/home/DashboardLayout';
 import { DashboardView } from './components/home/DashboardView';
 import { PatientProfileView } from './components/home/PatientProfileView';
-import { DoctorProfileView } from './components/home/DoctorProfileView';
+import { DoctorProfile as DoctorProfileView } from './components/DoctorProfile/index';
 import { HistoryView } from './components/home/HistoryView';
 import { SettingsView } from './components/home/SettingsView';
 import { useAppInit } from './hooks/useAppInit';
