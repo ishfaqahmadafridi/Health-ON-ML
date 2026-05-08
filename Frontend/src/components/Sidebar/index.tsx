@@ -11,15 +11,15 @@ interface SidebarProps {
 
 /**
  * Sidebar Module Entry Point
- * Provides a specialized navigation rail with SidebarContext.
+ * Implements the Narrow Navy Sidebar from the reference image.
  */
 export const Sidebar: FC<SidebarProps> = (props) => {
   return (
     <SidebarProvider>
-      <aside className="w-24 bg-[#2B78C5] flex flex-col items-center py-6 h-[calc(100vh-2rem)] rounded-[32px] my-4 ml-4 shadow-2xl shadow-blue-500/20 sticky top-4 transition-all">
+      <aside className="w-16 bg-[#0B3B6F] flex flex-col items-center py-6 h-[calc(100vh-2rem)] rounded-[32px] my-4 ml-4 shadow-xl sticky top-4 transition-all z-50">
         <SidebarLogo />
         
-        <div className="flex-1 flex flex-col justify-center">
+        <div className="flex-1 flex flex-col items-center gap-4 mt-10">
           <NavList activeView={props.activeView} onViewChange={props.onViewChange} />
         </div>
 

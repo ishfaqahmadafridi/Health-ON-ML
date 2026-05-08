@@ -9,7 +9,7 @@ export const DashboardLayout: FC<DashboardLayoutProps> = ({ leftPanel, rightPane
   return (
     <div className="flex gap-8 items-start w-full max-w-[1600px] mx-auto">
       {/* Left Panel - Patient Profile */}
-      <div className="w-80 shrink-0">
+      <div className="w-[380px] shrink-0">
         {leftPanel}
       </div>
 

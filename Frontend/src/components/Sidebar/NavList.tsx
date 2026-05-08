@@ -11,11 +11,11 @@ export const NavList: FC<NavListProps> = ({ activeView, onViewChange }) => {
   const { navItems } = useSidebar();
 
   return (
-    <nav className="flex flex-col gap-10">
+    <nav className="flex flex-col gap-6">
       {navItems.map((item) => (
         <NavItem
           key={item.id}
-          {...item}
+          item={item}
           isActive={activeView === item.id}
           onClick={() => onViewChange(item.id)}
         />

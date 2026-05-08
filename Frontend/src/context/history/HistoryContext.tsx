@@ -1,12 +1,12 @@
-import React, { createContext, useContext, useMemo, ReactNode } from 'react';
+import React, { createContext, useContext, useMemo, ReactNode, useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { 
-  removePredictionFromHistory, 
   loadPredictionFromHistory, 
   setSearchQuery 
 } from '../../store/slices';
 import { filterHistoryItems } from '../../utils/history';
 import { useNavigate } from 'react-router-dom';
+import { getPredictionHistory } from '../../api/health';
 import type { HistoryEntry } from '../../types';
 
 interface HistoryContextType {
@@ -14,7 +14,7 @@ interface HistoryContextType {
   searchQuery: string;
   filteredHistory: HistoryEntry[];
   handleView: (entry: HistoryEntry) => void;
-  handleDelete: (id: string) => void;
+  handleDelete: (id: number) => void;
   handleSearchChange: (query: string) => void;
 }
 
@@ -23,21 +23,30 @@ export const HistoryContext = createContext<HistoryContextType | undefined>(unde
 export const HistoryProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { history } = useAppSelector(state => state.prediction);
   const { searchQuery } = useAppSelector(state => state.ui);
+  
+  const [history, setHistory] = useState<HistoryEntry[]>([]);
+
+  useEffect(() => {
+    getPredictionHistory()
+      .then(data => setHistory(data))
+      .catch(err => console.error("Failed to load history:", err));
+  }, []);
 
   const filteredHistory = useMemo(() => 
     filterHistoryItems(history, searchQuery), 
   [history, searchQuery]);
 
   const handleView = (entry: HistoryEntry) => {
-    dispatch(loadPredictionFromHistory(entry.results));
+    // For now, load into Redux for analysis view
+    dispatch(loadPredictionFromHistory(entry.predictionResult));
     navigate('/analysis');
   };
 
-  const handleDelete = (id: string) => {
+  const handleDelete = (id: number) => {
     if (window.confirm('Are you sure you want to delete this clinical record?')) {
-      dispatch(removePredictionFromHistory(id));
+      // Optimistic delete from UI (Requires backend endpoint for full deletion)
+      setHistory(prev => prev.filter(item => item.id !== id));
     }
   };
 

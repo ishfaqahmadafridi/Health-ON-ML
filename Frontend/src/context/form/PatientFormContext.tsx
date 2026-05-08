@@ -12,6 +12,10 @@ interface PatientFormContextType {
 export const PatientFormContext = createContext<PatientFormContextType | undefined>(undefined);
 
 const initialFormState: PatientInput = {
+  name: '',
+  fatherName: '',
+  contactNumber: '',
+  heartRate: 76,
   age: 45,
   gender: 'Male',
   height: 175,

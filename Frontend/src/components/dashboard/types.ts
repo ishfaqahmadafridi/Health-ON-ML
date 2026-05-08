@@ -5,4 +5,5 @@ export interface DashboardProps {
   patientData: PatientInput | null;
   results: PredictionResponse | null;
   isLoading: boolean;
+  error: string | null;
 }

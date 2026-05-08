@@ -8,6 +8,7 @@ interface DashboardContextType {
   patientData: PatientInput | null;
   results: PredictionResponse | null;
   isLoading: boolean;
+  error: string | null;
   onFormSubmit: (data: PatientInput) => Promise<void>;
   handleNewAssessment: () => void;
 }
@@ -20,13 +21,19 @@ export const DashboardProvider: React.FC<{
   patientData: PatientInput | null;
   results: PredictionResponse | null;
   isLoading: boolean;
-}> = ({ children, onFormSubmit, patientData, results, isLoading }) => {
+  error?: string | null;
+}> = ({ children, onFormSubmit, patientData, results, isLoading, error = null }) => {
   const hasData = !!patientData;
   const { currentView, setView } = useDashboardState(hasData);
 
   const handleSubmit = async (data: PatientInput) => {
-    await onFormSubmit(data);
-    setView('analysis');
+    try {
+      await onFormSubmit(data);
+      setView('analysis');
+    } catch (err) {
+      // Error handling is managed by the parent, but we keep analysis view 
+      // if it was already showing or switch back to form if needed
+    }
   };
 
   const handleNewAssessment = () => {
@@ -39,6 +46,7 @@ export const DashboardProvider: React.FC<{
     patientData,
     results,
     isLoading,
+    error: error || null,
     onFormSubmit: handleSubmit,
     handleNewAssessment
   };

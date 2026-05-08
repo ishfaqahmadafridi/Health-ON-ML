@@ -12,8 +12,8 @@ interface HistoryListItemProps {
 }
 
 export const HistoryListItem: FC<HistoryListItemProps> = ({ entry, onView, onDelete }) => {
-  const { results } = entry;
-  const formattedDate = formatAssessmentDate(entry.timestamp);
+  const { predictionResult } = entry;
+  const formattedDate = formatAssessmentDate(entry.createdAt || new Date().toISOString());
 
   return (
     <div 
@@ -27,13 +27,13 @@ export const HistoryListItem: FC<HistoryListItemProps> = ({ entry, onView, onDel
           </div>
           <div>
             <div className="flex items-center gap-3">
-              <h4 className="text-sm font-black text-gray-900 tracking-tight">{formattedDate}</h4>
+              <h4 className="text-sm font-black text-gray-900 tracking-tight">{entry.patientName || 'Patient Record'}</h4>
               <span className="text-[9px] font-black px-2 py-0.5 bg-green-50 text-green-600 rounded-lg uppercase tracking-wider">
                 Completed
               </span>
             </div>
             <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-0.5">
-              Ref ID: <span className="text-gray-600">{entry.id}</span>
+              Ref ID: <span className="text-gray-600">P-{entry.id}</span> | {formattedDate}
             </p>
           </div>
         </div>
@@ -42,9 +42,9 @@ export const HistoryListItem: FC<HistoryListItemProps> = ({ entry, onView, onDel
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <RiskSummaryBadge type="heart" label="Heart" score={results.heartDisease.riskScore} />
-        <RiskSummaryBadge type="diabetes" label="Diabetes" score={results.diabetes.riskScore} />
-        <RiskSummaryBadge type="kidney" label="Kidney" score={results.kidneyDisease.riskScore} />
+        <RiskSummaryBadge type="heart" label="Heart" score={predictionResult.heart.riskScore} />
+        <RiskSummaryBadge type="diabetes" label="Diabetes" score={predictionResult.diabetes.riskScore} />
+        <RiskSummaryBadge type="kidney" label="Kidney" score={predictionResult.kidney.riskScore} />
       </div>
     </div>
   );

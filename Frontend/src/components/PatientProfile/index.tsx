@@ -6,9 +6,15 @@ import { DetailedPatientProfile } from './DetailedPatientProfile';
  * Advanced Patient Profile Entry Point
  * Provides clinical vitals, biometrics, and AI feature importance (SHAP).
  */
-export const PatientProfile: FC = () => {
+import type { PatientInput } from '../../types';
+
+interface PatientProfileProps {
+  data: PatientInput;
+}
+
+export const PatientProfile: FC<PatientProfileProps> = ({ data }) => {
   return (
-    <DetailedProfileProvider>
+    <DetailedProfileProvider initialData={data}>
       <DetailedPatientProfile />
     </DetailedProfileProvider>
   );

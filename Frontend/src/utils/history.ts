@@ -21,14 +21,15 @@ export const getOverallRiskStatus = (riskLevels: string[]): 'stable' | 'warning'
 /**
  * Filters history based on a search query.
  */
-export const filterHistoryItems = <T extends { id: string; timestamp: string }>(
+export const filterHistoryItems = <T extends { id: number | string; createdAt?: string; timestamp?: string }>(
   items: T[],
   query: string
 ): T[] => {
   if (!query) return items;
   const searchLower = query.toLowerCase();
-  return items.filter(item => 
-    item.id.toLowerCase().includes(searchLower) ||
-    formatAssessmentDate(item.timestamp).toLowerCase().includes(searchLower)
-  );
+  return items.filter(item => {
+    const timeString = item.createdAt || item.timestamp || '';
+    return String(item.id).toLowerCase().includes(searchLower) ||
+      (timeString && formatAssessmentDate(timeString).toLowerCase().includes(searchLower));
+  });
 };

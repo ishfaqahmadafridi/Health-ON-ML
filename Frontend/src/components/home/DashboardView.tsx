@@ -1,19 +1,21 @@
 import { useNavigate } from 'react-router-dom';
 import { Dashboard } from '../dashboard';
-import { useAppDispatch } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store';
 import { usePrediction } from '../../hooks/prediction/usePrediction';
-import { setError } from '../../store/slices';
+import { setError, setPredictionResults } from '../../store/slices';
 import type { PatientInput } from '../../types';
 
 export const DashboardView = () => {
   const dispatch = useAppDispatch();
-  const { data, loading, error, submit } = usePrediction();
+  const { loading, error, submit } = usePrediction();
+  const { currentPatient, results } = useAppSelector(state => state.prediction);
   const navigate = useNavigate();
 
   const handleFormSubmit = async (formData: PatientInput) => {
     try {
-      await submit(formData);
-      navigate('/analysis');
+      const predictionResults = await submit(formData);
+      dispatch(setPredictionResults({ patient: formData, results: predictionResults }));
+      navigate('/');
     } catch (err) {
       dispatch(setError((err as Error).message));
     }
@@ -29,9 +31,10 @@ export const DashboardView = () => {
       )}
       <Dashboard
         onFormSubmit={handleFormSubmit}
-        patientData={data as unknown as PatientInput | null}
-        results={data}
+        patientData={currentPatient}
+        results={results}
         isLoading={loading}
+        error={error}
       />
     </div>
   );

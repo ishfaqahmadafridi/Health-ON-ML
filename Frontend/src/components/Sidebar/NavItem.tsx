@@ -1,25 +1,31 @@
 import type { FC } from 'react';
+import type { NavItem as NavItemType } from '../../context/sidebar/SidebarContext';
 
 interface NavItemProps {
-  id: string;
-  label: string;
-  icon: any;
+  item: NavItemType;
   isActive: boolean;
   onClick: () => void;
 }
 
-export const NavItem: FC<NavItemProps> = ({ id, label, icon: Icon, isActive, onClick }) => {
+export const NavItem: FC<NavItemProps> = ({ item, isActive, onClick }) => {
+  const Icon = item.icon;
+
   return (
     <button
       onClick={onClick}
-      className={`p-3 rounded-2xl transition-all duration-300 ${
+      className={`relative flex items-center justify-center w-10 h-10 rounded-xl transition-all duration-300 group ${
         isActive
-          ? 'bg-white/20 text-white shadow-lg ring-1 ring-white/30'
-          : 'text-white/50 hover:text-white hover:bg-white/10'
+          ? 'bg-white/15 text-white'
+          : 'text-white/50 hover:text-white hover:bg-white/5'
       }`}
-      title={label}
+      title={item.label}
     >
-      <Icon className="w-6 h-6" />
+      <Icon size={20} />
+      
+      {/* Tooltip for accessibility since label is hidden */}
+      <span className="absolute left-14 px-2 py-1 bg-gray-900 text-white text-[10px] rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-[100]">
+        {item.label}
+      </span>
     </button>
   );
 };

@@ -24,6 +24,20 @@ export const DoctorProfileProvider: React.FC<{ children: ReactNode }> = ({ child
   const dispatch = useAppDispatch();
   const { doctors, currentDoctorId } = useAppSelector(state => state.doctor);
   const [isEditing, setIsEditing] = useState(false);
+
+  React.useEffect(() => {
+    import('../../api/health').then(({ getDoctorsFromDB }) => {
+      getDoctorsFromDB().then(dbDoctors => {
+        if (dbDoctors && dbDoctors.length > 0) {
+          // Add them to redux store if not already there
+          dbDoctors.forEach(doc => {
+            const exists = doctors.find(d => d.id === doc.id);
+            if (!exists) dispatch(addDoctor(doc));
+          });
+        }
+      });
+    });
+  }, []);
   const [formData, setFormData] = useState<Doctor>({
     id: '', name: '', email: '', role: '', specialty: '', image: null
   });
@@ -47,7 +61,7 @@ export const DoctorProfileProvider: React.FC<{ children: ReactNode }> = ({ child
     setIsEditing(true);
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!formData.name) return alert('Practitioner name is mandatory');
     const existing = doctors.find(d => d.id === formData.id);
     
@@ -56,6 +70,12 @@ export const DoctorProfileProvider: React.FC<{ children: ReactNode }> = ({ child
     } else {
       dispatch(addDoctor(formData));
     }
+    
+    // Fire-and-forget save to backend SQLite database
+    import('../../api/health').then(({ saveDoctorToDB }) => {
+      saveDoctorToDB(formData);
+    });
+
     setIsEditing(false);
   };
 

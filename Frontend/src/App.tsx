@@ -23,6 +23,7 @@ const App = () => {
         <Route path="/doctor-profile" element={<DoctorProfileView />} />
         <Route path="/history" element={<HistoryView />} />
         <Route path="/settings" element={<SettingsView />} />
+        <Route path="/support" element={<SupportView />} />
       </Route>
     </Routes>
   );
