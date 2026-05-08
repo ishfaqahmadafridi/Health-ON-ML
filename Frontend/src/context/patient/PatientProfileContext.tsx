@@ -16,7 +16,7 @@ interface PatientProfileContextType {
 export const PatientProfileContext = createContext<PatientProfileContextType | undefined>(undefined);
 
 export const PatientProfileProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const { data: patientData } = useAppSelector(state => state.prediction);
+  const { currentPatient: patientData } = useAppSelector(state => state.prediction);
   const hasData = !!patientData;
 
   // Mock clinical history (could be moved to Redux later)

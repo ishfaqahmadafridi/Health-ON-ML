@@ -1,30 +1,33 @@
 import React, { createContext, useContext, ReactNode } from 'react';
-import { useAppSelector } from '../../store';
-import type { PatientInput, PredictionResponse } from '../../types';
+import type { PatientInput } from '../../types';
+
+interface SHAPFeature {
+  label: string;
+  val: number;
+  color: string;
+}
 
 interface DetailedProfileContextType {
   data: PatientInput | null;
-  prediction: PredictionResponse | null;
-  shapFeatures: Array<{ label: string; val: number; color: string }>;
+  shapFeatures: SHAPFeature[];
 }
 
 export const DetailedProfileContext = createContext<DetailedProfileContextType | undefined>(undefined);
 
-export const DetailedProfileProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const { data } = useAppSelector(state => state.prediction);
+export const DetailedProfileProvider: React.FC<{ 
+  children: ReactNode; 
+  initialData?: PatientInput | null 
+}> = ({ children, initialData }) => {
   
-  // Mock SHAP data (This would normally come from the prediction API response)
-  const shapFeatures: DetailedProfileContextType['shapFeatures'] = [
+  const shapFeatures: SHAPFeature[] = [
     { label: 'Glucose', val: 95, color: 'bg-pink-500' },
-    { label: 'Age', val: 78, color: 'bg-purple-500' },
-    { label: 'Systolic BP', val: 65, color: 'bg-blue-500' },
-    { label: 'Cholesterol', val: 42, color: 'bg-indigo-500' },
-    { label: 'BMI', val: 30, color: 'bg-cyan-500' },
+    { label: 'BP', val: 75, color: 'bg-blue-600' },
+    { label: 'Cholesterol', val: 45, color: 'bg-indigo-700' },
+    { label: 'Age', val: 30, color: 'bg-blue-900' },
   ];
 
   const value = {
-    data,
-    prediction: null, // Link to actual prediction results if needed
+    data: initialData || null,
     shapFeatures
   };
 
@@ -34,3 +37,5 @@ export const DetailedProfileProvider: React.FC<{ children: ReactNode }> = ({ chi
     </DetailedProfileContext.Provider>
   );
 };
+
+

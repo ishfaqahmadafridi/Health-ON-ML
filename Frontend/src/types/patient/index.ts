@@ -14,6 +14,7 @@ export interface PatientInput {
   name?: string;
   fatherName?: string;
   contactNumber?: string;
+  heartRate?: number;
 }
 
 export interface ValidationError {

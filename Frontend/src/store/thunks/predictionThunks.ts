@@ -20,9 +20,9 @@ export const fetchPrediction = createAsyncThunk(
 
       // Check for high risk results and trigger notification
       const risks = [
-        { label: 'Heart Disease', value: response.heartDisease.riskScore },
+        { label: 'Heart Disease', value: response.heart.riskScore },
         { label: 'Diabetes', value: response.diabetes.riskScore },
-        { label: 'Kidney Disease', value: response.kidneyDisease.riskScore }
+        { label: 'Kidney Disease', value: response.kidney.riskScore }
       ];
 
       const highRisk = risks.find(r => r.value > 70);

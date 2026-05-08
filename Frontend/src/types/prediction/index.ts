@@ -1,21 +1,25 @@
 export interface DiseaseRisk {
   riskScore: number;
-  level: 'Low' | 'Medium' | 'High';
-  probability?: number;
+  riskLevel: 'Low' | 'Medium' | 'High';
+  description: string;
 }
 
 export interface PredictionResponse {
-  heartDisease: DiseaseRisk;
+  heart: DiseaseRisk;
   diabetes: DiseaseRisk;
-  kidneyDisease: DiseaseRisk;
+  kidney: DiseaseRisk;
   timestamp?: string;
   patientId?: string;
 }
 
 export interface HistoryEntry {
-  id: string;
-  timestamp: string;
-  results: PredictionResponse;
+  id: number;
+  patientName: string;
+  patientAge: number;
+  patientGender: string;
+  patientInput: any;
+  predictionResult: PredictionResponse;
+  createdAt: string;
 }
 
 export interface PredictionState {

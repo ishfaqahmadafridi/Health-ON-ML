@@ -51,7 +51,8 @@ apiClient.interceptors.response.use(
       // that falls out of the range of 2xx
       console.error('API Error Response:', error.response.data);
       
-      const message = (error.response.data as any)?.message || error.message;
+      const data = error.response.data as any;
+      const message = data?.details || data?.message || error.message;
       return Promise.reject(new Error(message));
     } else if (error.request) {
       // The request was made but no response was received

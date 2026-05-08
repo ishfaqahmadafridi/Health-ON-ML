@@ -8,7 +8,9 @@ import type { PatientInput } from '../../types';
  */
 export const usePredictionRedux = () => {
   const dispatch = useAppDispatch();
-  const { data, loading, error, submitted } = useAppSelector((state) => state.prediction);
+  const { results: data, currentPatient, history, loading, error, submitted } = useAppSelector(
+    (state) => state.prediction
+  );
 
   const submitAssessment = async (patientData: PatientInput) => {
     try {
