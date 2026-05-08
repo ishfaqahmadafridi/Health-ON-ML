@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { addDoctor, updateDoctor, setCurrentDoctor, deleteDoctor } from '../../store/slices';

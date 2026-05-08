@@ -5,6 +5,7 @@ import { PatientProfile as PatientProfileView } from './components/PatientProfil
 import { DoctorProfile as DoctorProfileView } from './components/DoctorProfile/index';
 import { HistoryView } from './components/History/index';
 import { Settings as SettingsView } from './components/Settings/index';
+import { SupportView } from './components/Support/index';
 import { useAppInit } from './hooks/app/useAppInit';
 
 const App = () => {

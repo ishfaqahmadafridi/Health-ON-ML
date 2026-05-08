@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from 'react';
-import { getDoctorStats } from '../../../api/health';
+import { getDoctorStats } from '../../api/health';
 
 export const ProfileStats: FC = () => {
   const [stats, setStats] = useState([

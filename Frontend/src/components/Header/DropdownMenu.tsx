@@ -35,7 +35,7 @@ export const DropdownMenu: FC<DropdownMenuProps> = ({ onNavigate, onClose }) => 
       <DropdownMenuItem 
         icon={HelpCircle} 
         label="Help & Support" 
-        onClick={() => handleItemClick('')} 
+        onClick={() => handleItemClick('support')} 
       />
       <div className="border-t border-gray-100 my-1" />
       <DropdownMenuItem 
